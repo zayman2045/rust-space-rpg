@@ -1,10 +1,22 @@
-struct Planet {
+#[derive(Debug)]
+pub struct Planet {
     name: String,
     description: String,
     atmosphere: Atmosphere
 }
 
-enum Atmosphere {
+impl Planet {
+    pub fn new(name: String, description: String, atmosphere: Atmosphere) -> Self {
+        Self {
+            name,
+            description,
+            atmosphere
+        }
+    }
+}
+
+#[derive(Debug)]
+pub enum Atmosphere {
     Pleasant(i32),
     Harsh(i32),
     Unstable(i32)
