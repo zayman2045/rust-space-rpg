@@ -1,3 +1,5 @@
+use std::io;
+
 mod celestial_bodies;
 use celestial_bodies::Planet;
 
@@ -5,17 +7,23 @@ mod characters;
 use characters::Card;
 
 // user selects hero type to begin the game
-pub fn start_game(input: &str) -> Card {
+pub fn start_game() -> Card {
     println!("\nWelcome to Stargaze! Prepare for battle!\n");
     println!("Choose one of the following heroes:\n");
     println!("- Star Pilot\n- Battle Engineer\n- Space Mage\n");
 
-    let player_hero_type = match input {
-        "Star Pilot" => {println!("You are now a Star Pilot...Welcome to the fight!");
+    let mut hero_selection = String::new();
+    match io::stdin().read_line(&mut hero_selection){
+        Ok(input) => input,
+        Err(_) => panic!("Failed to select hero")
+    };
+
+    let player_hero_type = match hero_selection.trim() {
+        "Star Pilot" => {println!("\nYou are now a Star Pilot. Welcome to the fight!");
             characters::heroes::HeroType::StarPilot},
-        "Battle Engineer" => {println!("You are now a Battle Engineer...Welcome to the fight!");
+        "Battle Engineer" => {println!("\nYou are now a Battle Engineer. Welcome to the fight!");
         characters::heroes::HeroType::BattleEngineer},
-        "Space Mage" => {println!("You are now a Space Mage...Welcome to the fight!");
+        "Space Mage" => {println!("\nYou are now a Space Mage. Welcome to the fight!");
         characters::heroes::HeroType::SpaceMage},
         _ => panic!("Invalid Input")
     };
@@ -26,7 +34,7 @@ pub fn start_game(input: &str) -> Card {
     // create instance of player card
     characters::Card::create_player(player_hero_type, player_home_planet)
 
-    // TODO: create all planets and pass one in instead of explicitly defining player_home_planet
+    // TODO: create_planets and pass one as an argument to Planet::new() instead of explicitly defining player_home_planet
 }
 
 // create all planets
