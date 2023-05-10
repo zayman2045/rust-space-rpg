@@ -1,6 +1,33 @@
 mod celestial_bodies;
 use celestial_bodies::Planet;
 
+mod characters;
+use characters::Card;
+
+// user selects hero type to begin the game
+pub fn start_game(input: &str) -> Card {
+    println!("\nWelcome to Stargaze! Prepare for battle!\n");
+    println!("Choose one of the following heroes:\n");
+    println!("- Star Pilot\n- Battle Engineer\n- Space Mage\n");
+
+    let player_hero_type = match input {
+        "Star Pilot" => {println!("You are now a Star Pilot...Welcome to the fight!");
+            characters::heroes::HeroType::StarPilot},
+        "Battle Engineer" => {println!("You are now a Battle Engineer...Welcome to the fight!");
+        characters::heroes::HeroType::BattleEngineer},
+        "Space Mage" => {println!("You are now a Space Mage...Welcome to the fight!");
+        characters::heroes::HeroType::SpaceMage},
+        _ => panic!("Invalid Input")
+    };
+
+    // create instance of home planet
+    let player_home_planet = celestial_bodies::Planet::new("Earth".to_string(), "A basic, ordinary planet".to_string(), celestial_bodies::Atmosphere::Pleasant(0));
+
+    // create instance of player card
+    characters::Card::create_player(player_hero_type, player_home_planet)
+
+    // TODO: create all planets and pass one in instead of explicitly defining player_home_planet
+}
 
 // create all planets
 pub fn create_planets() -> Vec<Planet> {
@@ -30,6 +57,13 @@ pub fn create_planets() -> Vec<Planet> {
     planets
 }
 
-// spawn an enemy
+// spawn an enemy card
+fn spawn_enemy() -> Card {
+    todo!()
+}
 
-// battle the spawned enemy
+// battle the spawned enemy using rng (card vs card)
+// use generics and create HeroCard/EnemyCard types
+fn battle(player_card: Card, enemy_card: Card) {
+    todo!()
+}
